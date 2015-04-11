@@ -1,0 +1,13 @@
+INDEX VERSION 1.127+C:\Users\Silvio\RoboticaAvbSgn\trunk\work\.metadata\.plugins\org.eclipse.jdt.core
+3399291734.index
+2629796822.index
+158767867.index
+2731661210.index
+593610848.index
+2037278545.index
+2974825707.index
+482742830.index
+1128920495.index
+28240208.index
+2340110554.index
+2922711305.index
