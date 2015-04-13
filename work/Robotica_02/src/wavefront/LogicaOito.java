@@ -1,5 +1,7 @@
 package wavefront;
 
+import util.PontoMapa;
+
 public class LogicaOito implements IMovimentacao {
 
 	@Override

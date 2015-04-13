@@ -1,11 +1,13 @@
 package wavefront;
 
+import util.PontoMapa;
+
 /**
  * 
  * @author Silvio
  *
- * Interface que define os métodos
- * para fazer a movimentação do robô
+ * Interface que define os mï¿½todos
+ * para fazer a movimentaï¿½ï¿½o do robï¿½
  * na matriz do wavefront
  *
  */
@@ -20,8 +22,8 @@ public interface IMovimentacao {
 	Direcao proximoMovimento(int [][] cenario, PontoMapa robo);
 	
 	/**
-	 * Metodo que verifica se a posição que
-	 * está sendo testado não é a posição original
+	 * Metodo que verifica se a posiï¿½ï¿½o que
+	 * estï¿½ sendo testado nï¿½o ï¿½ a posiï¿½ï¿½o original
 	 * do robo ou obstaculo
 	 * 
 	 * @param c

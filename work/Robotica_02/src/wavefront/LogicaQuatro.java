@@ -1,5 +1,7 @@
 package wavefront;
 
+import util.PontoMapa;
+
 public class LogicaQuatro implements IMovimentacao {
 
 	@Override
@@ -15,11 +17,11 @@ public class LogicaQuatro implements IMovimentacao {
 		int contador = 9999;
 		Direcao d = null;
 		
-		// se a posição a esquerda da posição atual estiver dentro da matriz então valida
+		// se a posiï¿½ï¿½o a esquerda da posiï¿½ï¿½o atual estiver dentro da matriz entï¿½o valida
 		if (xE > -1) {
 			int aux = cenario[xE][rY];
 
-			if (aux == 0) { // se já for objetivo então retorna
+			if (aux == 0) { // se jï¿½ for objetivo entï¿½o retorna
 				robo.setX(xE);
 				return Direcao.O;
 			}
@@ -30,11 +32,11 @@ public class LogicaQuatro implements IMovimentacao {
 			}
 		}
 		
-		// se a posição do topo estiver dentro da matriz
+		// se a posiï¿½ï¿½o do topo estiver dentro da matriz
 		if (yC > -1) {
 			int aux = cenario[rX][yC];
 
-			if (aux == 0) { // se já for objetivo então retorna
+			if (aux == 0) { // se jï¿½ for objetivo entï¿½o retorna
 				robo.setY(yC);
 				return Direcao.N;	
 			}
@@ -45,11 +47,11 @@ public class LogicaQuatro implements IMovimentacao {
 			}
 		}
 		
-		// se a posição a direita estiver dentro da matriz
+		// se a posiï¿½ï¿½o a direita estiver dentro da matriz
 		if (xD < cenario.length) {
 			int aux = cenario[xD][rY];
 
-			if (aux == 0) { // se já for objetivo então retorna
+			if (aux == 0) { // se jï¿½ for objetivo entï¿½o retorna
 				robo.setX(xD);
 				return Direcao.L;	
 			}
@@ -60,11 +62,11 @@ public class LogicaQuatro implements IMovimentacao {
 			}
 		}
 
-		// se a posição baixo estiver dentro da matriz
+		// se a posiï¿½ï¿½o baixo estiver dentro da matriz
 		if (yB < cenario[0].length) {
 			int aux = cenario[rX][yB];
 
-			if (aux == 0) { // se já for objetivo então retorna
+			if (aux == 0) { // se jï¿½ for objetivo entï¿½o retorna
 				robo.setY(yB);
 				return Direcao.S;
 			}
@@ -75,7 +77,7 @@ public class LogicaQuatro implements IMovimentacao {
 			}
 		}
 
-		// altera posição do robo na matriz
+		// altera posiï¿½ï¿½o do robo na matriz
 		switch (d) {
 		case O:
 			robo.setX(xE);

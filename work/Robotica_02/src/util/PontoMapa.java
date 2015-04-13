@@ -1,4 +1,4 @@
-package wavefront;
+package util;
 public class PontoMapa {
 
 	private int x;

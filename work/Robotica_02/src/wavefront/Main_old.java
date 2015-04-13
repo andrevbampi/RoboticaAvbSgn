@@ -1,6 +1,7 @@
-import wavefront.PontoMapa;
+package wavefront;
+import util.PontoMapa;
 
-public class Main {
+public class Main_old {
 
 	private int[][] cenarioB = new int[6][7];
 	private int[][] cenarioA = new int[6][7];
@@ -141,19 +142,19 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Main m = new Main();
+		Main_old m = new Main_old();
 
-//		System.out.println("Cenário A:");
+//		System.out.println("Cenï¿½rio A:");
 //		m.preencheCenarioA();
 //		
 //		System.out.println("\n");
 //		
-//		System.out.println("Cenário B:");
+//		System.out.println("Cenï¿½rio B:");
 //		m.preencheCenarioB();
 //		
 //		System.out.println("\n");
 		
-		System.out.println("Cenário Teste:");
+		System.out.println("Cenï¿½rio Teste:");
 		m.preencheCenarioTeste();
 	}
 }

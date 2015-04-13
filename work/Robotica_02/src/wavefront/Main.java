@@ -1,12 +1,10 @@
+package wavefront;
 import java.util.ArrayList;
 import java.util.List;
 
-import wavefront.Direcao;
-import wavefront.IMovimentacao;
-import wavefront.LogicaQuatro;
-import wavefront.PontoMapa;
+import util.PontoMapa;
 
-public class Main2 {
+public class Main {
 	private final int padrao = 99;
 
 	private int[][] cenarioA = new int[6][7];
@@ -34,110 +32,83 @@ public class Main2 {
 			new PontoMapa(3, 3), new PontoMapa(3, 2), new PontoMapa(4, 4),
 			new PontoMapa(4, 3), new PontoMapa(4, 2) };
 
-	// variaveis de controle da navegação
+	// variaveis de controle da navegaï¿½ï¿½o
 	private IMovimentacao mov;
 	private List<Direcao> navegacao = new ArrayList<Direcao>();
 	
-	public Main2(IMovimentacao mov) {
+	public Main(IMovimentacao mov) {
 		this.mov = mov;
 	}
 	
-	public void preencheCenarioA() {
-		for (int i = 0; i < cenarioA.length; i++) {
-			for (int j = 0; j < cenarioA[i].length; j++) {
-				cenarioA[i][j] = padrao;
+	public void preencheCenario(char cenario) {
+		switch(cenario) {
+			case 'A': preencheCenario(cenarioA, 
+									  obstaculosA, 
+									  objetivoA, 
+									  inicioRoboA);
+				      break;
+			case 'B': preencheCenario(cenarioB, 
+					                  obstaculosB, 
+					                  objetivoB, 
+					                  inicioRoboB);
+					  break;
+			default: preencheCenario(cenarioTeste, 
+					                 obstaculosTeste, 
+					                 objetivoTeste, 
+					                 inicioRoboTeste);
+		}
+	}
+	
+	private void preencheCenario(int[][] cenario, 
+			                     PontoMapa[] obstaculos, 
+			                     PontoMapa objetivo,
+			                     PontoMapa inicioRobo) {
+		for (int i = 0; i < cenario.length; i++) {
+			for (int j = 0; j < cenario[i].length; j++) {
+				cenario[i][j] = padrao;
 			}
 		}
 
 		// atribui os obstaculos no cenario
-		for (PontoMapa pontoMapa : obstaculosA) {
-			cenarioA[pontoMapa.getX()][pontoMapa.getY()] = -1;
+		for (PontoMapa pontoMapa : obstaculos) {
+			cenario[pontoMapa.getX()][pontoMapa.getY()] = -1;
 		}
 		
-		cenarioA[objetivoA.getX()][objetivoA.getY()] = 0;
-		cenarioA[inicioRoboA.getX()][inicioRoboA.getY()] = Integer.MAX_VALUE;
+		cenario[objetivo.getX()][objetivo.getY()] = 0;
+		cenario[inicioRobo.getX()][inicioRobo.getY()] = Integer.MAX_VALUE;
 
-		preencherWavefront(cenarioA, objetivoA.getX(), objetivoA.getY(), 1, padrao);
+		preencherWavefront(cenario, objetivo.getX(), objetivo.getY(), 1, padrao);
 
-		System.out.println(imprimirCenario(cenarioA));
+		System.out.println(imprimirCenario(cenario));
 	}
 	
-	public void navegarCenarioA() {
-		while (!inicioRoboA.pontosIguais(objetivoA)) {
-			this.navegacao.add(mov.proximoMovimento(cenarioA, inicioRoboA));
-			cenarioA[inicioRoboA.getX()][inicioRoboA.getY()] = Integer.MAX_VALUE;
+	public void navegarCenario(char cenario) {
+		switch(cenario) {
+		case 'A': navegarCenario(cenarioA, 
+				                 inicioRoboA, 
+								 objetivoA);
+			      break;
+		case 'B': navegarCenario(cenarioB, 
+                                 inicioRoboB, 
+				                 objetivoB);
+				  break;
+		default: navegarCenario(cenarioTeste, 
+                                inicioRoboTeste, 
+				                objetivoTeste);
+		}
+	}
+	
+	private void navegarCenario(int[][] cenario,
+						       PontoMapa inicioRobo,
+			                   PontoMapa objetivo) {
+		while (!inicioRobo.pontosIguais(objetivo)) {
+			this.navegacao.add(mov.proximoMovimento(cenario, inicioRobo));
+			cenario[inicioRobo.getX()][inicioRobo.getY()] = Integer.MAX_VALUE;
 		}
 
 		for (Direcao d : this.navegacao) {
 			System.out.print(d.toString() + " ");
 		}
-
-//		System.out.println(imprimirCenario(cenarioA));
-	}
-
-	public void preencheCenarioB() {
-		for (int i = 0; i < cenarioB.length; i++) {
-			for (int j = 0; j < cenarioB[i].length; j++) {
-				cenarioB[i][j] = padrao;
-			}
-		}
-
-		// atribui os obstaculos no cenario
-		for (PontoMapa pontoMapa : obstaculosB) {
-			cenarioB[pontoMapa.getX()][pontoMapa.getY()] = -1;
-		}
-		
-		cenarioB[objetivoB.getX()][objetivoB.getY()] = 0;
-		cenarioB[inicioRoboB.getX()][inicioRoboB.getY()] = Integer.MAX_VALUE;
-
-		preencherWavefront(cenarioB, objetivoB.getX(), objetivoB.getY(), 1, padrao);
-
-		System.out.println(imprimirCenario(cenarioB));
-	}
-	
-	public void navegarCenarioB() {
-		while (!inicioRoboB.pontosIguais(objetivoB)) {
-			this.navegacao.add(mov.proximoMovimento(cenarioB, inicioRoboB));
-			cenarioB[inicioRoboB.getX()][inicioRoboB.getY()] = Integer.MAX_VALUE;
-		}
-
-		for (Direcao d : this.navegacao) {
-			System.out.print(d.toString() + " ");
-		}
-
-//		System.out.println(imprimirCenario(cenarioB));
-	}
-	
-	public void preencheCenarioTeste() {
-		for (int i = 0; i < cenarioTeste.length; i++) {
-			for (int j = 0; j < cenarioTeste[i].length; j++) {
-				cenarioTeste[i][j] = padrao;
-			}
-		}
-
-		// atribui os obstaculos no cenario
-		for (PontoMapa pontoMapa : obstaculosTeste) {
-			cenarioTeste[pontoMapa.getX()][pontoMapa.getY()] = -1;
-		}
-
-		cenarioTeste[objetivoTeste.getX()][objetivoTeste.getY()] = 0;
-		cenarioTeste[inicioRoboTeste.getX()][inicioRoboTeste.getY()] = Integer.MAX_VALUE;
-		
-		preencherWavefront(cenarioTeste, objetivoTeste.getX(), objetivoTeste.getY(), 1, padrao);
-
-		System.out.println(imprimirCenario(cenarioTeste));
-	}
-
-	public void navegarCenarioTeste() {
-		while (!inicioRoboTeste.pontosIguais(objetivoTeste)) {
-			this.navegacao.add(mov.proximoMovimento(cenarioTeste, inicioRoboTeste));
-			cenarioTeste[inicioRoboTeste.getX()][inicioRoboTeste.getY()] = Integer.MAX_VALUE;
-		}
-
-		for (Direcao d : this.navegacao) {
-			System.out.print(d.toString() + " ");
-		}
-//		System.out.println(imprimirCenario(cenarioTeste));
 	}
 	
 	private void preencherWavefront(int[][] cenario, int x, int y, int contador, int padrao) {
@@ -229,22 +200,22 @@ public class Main2 {
 	}
 
 	public static void main(String[] args) {
-		Main2 m = new Main2(new LogicaQuatro());
+		Main m = new Main(new LogicaQuatro());
 		
 		System.out.println("Cenario A:");
-		m.preencheCenarioA();
-		m.navegarCenarioA();
+		m.preencheCenario('A');
+		m.navegarCenario('A');
 		
 		System.out.println("\n");
 		
 		System.out.println("Cenario B:");
-		m.preencheCenarioB();
-		m.navegarCenarioB();
+		m.preencheCenario('B');
+		m.navegarCenario('B');
 		
-//		System.out.println("\n");
+/*		System.out.println("\n");
 		
-//		System.out.println("Cenario teste:");
-//		m.preencheCenarioTeste();
-//		m.navegarCenarioTeste();
+		System.out.println("Cenario teste:");
+		m.preencheCenario('T');
+		m.navegarCenario('T');*/
 	}
 }
