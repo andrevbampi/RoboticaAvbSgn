@@ -28,7 +28,7 @@ public class MainMapaTrapezoidal {
 	private ArrayList<Trapezoide> listaTrapezoidesB = new ArrayList<Trapezoide>();
 
 
-	public void preencherCenarioInicial(char cenario) {
+	public void preencherCenarioInicial(char cenario) throws Exception {
 		switch(cenario) {
 			case 'A': preencherCenarioInicial(listaTrapezoidesA,
                     						  cenarioA, 
@@ -42,7 +42,7 @@ public class MainMapaTrapezoidal {
 	
 	private void preencherCenarioInicial(ArrayList<Trapezoide> listaTrapezoides,
 			                             int[][] cenario, 
-			                             PontoMapa[] obstaculos) {
+			                             PontoMapa[] obstaculos) throws Exception {
 		//Atribuir valor padrão
 		for (int i = 0; i < cenario.length; i++) {
 			for (int j = 0; j < cenario[i].length; j++) {
@@ -63,6 +63,7 @@ public class MainMapaTrapezoidal {
 				if (cenario[x][y] == obstaculo) {
 					if (!trapezoide.estaVazio()) {
 						trapezoide.setyFinal(y-1);
+						trapezoide.calcularPontoMedio();
 						listaTrapezoides.add(trapezoide);
 						trapezoide = new Trapezoide();
 					}
@@ -76,6 +77,7 @@ public class MainMapaTrapezoidal {
 			if (trapezoide.faltaFim()) {
 				trapezoide.setyFinal(cenario[x].length-1);
 				listaTrapezoides.add(trapezoide);
+				trapezoide.calcularPontoMedio();
 				trapezoide = new Trapezoide();
 			}
 		}
@@ -96,16 +98,20 @@ public class MainMapaTrapezoidal {
 	}
 	
 	public static void main(String[] args) {
-		MainMapaTrapezoidal mapaTrapezoidal = new MainMapaTrapezoidal();
-		
-		System.out.println("Cenário A");
-		mapaTrapezoidal.preencherCenarioInicial('A');
-		mapaTrapezoidal.mostrarTrapezoides('A');
-		System.out.println("\n");
-		
-		System.out.println("Cenário B");
-		mapaTrapezoidal.preencherCenarioInicial('B');
-		mapaTrapezoidal.mostrarTrapezoides('B');
-		System.out.println("\n");
+		try {
+			MainMapaTrapezoidal mapaTrapezoidal = new MainMapaTrapezoidal();
+			
+			System.out.println("Cenário A");
+			mapaTrapezoidal.preencherCenarioInicial('A');
+			mapaTrapezoidal.mostrarTrapezoides('A');
+			System.out.println("\n");
+			
+			System.out.println("Cenário B");
+			mapaTrapezoidal.preencherCenarioInicial('B');
+			mapaTrapezoidal.mostrarTrapezoides('B');
+			System.out.println("\n");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
