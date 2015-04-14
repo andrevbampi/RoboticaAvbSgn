@@ -110,6 +110,13 @@ public class MainMapaTrapezoidal {
 		}
 	}
 	
+	private boolean pontoCego(Trapezoide trapezoide, int[][] matriz) {
+		boolean bloqueadocima    = (trapezoide.getyCentro() == 0 || (matriz[trapezoide.getX()][trapezoide.getyCentro()-1] == obstaculo));
+		boolean bloqueadodireita = (trapezoide.getX() == matriz.length-1 || (matriz[trapezoide.getX()+1][trapezoide.getyCentro()] == obstaculo));
+		boolean bloqueadobaixo   = (trapezoide.getyCentro() == matriz[trapezoide.getX()].length-1 || (matriz[trapezoide.getX()][trapezoide.getyCentro()+1] == obstaculo));
+		return (bloqueadocima && bloqueadodireita && bloqueadobaixo);
+	}
+	
 	private void montarMatrizPontosMedios(ArrayList<Trapezoide> listaTrapezoides,
 			                              int[][] cenario,
 			                              int[][] pontosMedios) throws Exception {
@@ -123,7 +130,9 @@ public class MainMapaTrapezoidal {
 		Trapezoide trapTemp = null;
 		for (Trapezoide trapezoide : listaTrapezoides) {
 			//O centro dos trapezóides também serão vértices. Não haverá distinção.
-			pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
+			if (!pontoCego(trapezoide, pontosMedios)) {
+				pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
+			}
 			for (Trapezoide trapezoide2 : listaTrapezoides) {
 				if (!trapezoide.equals(trapezoide2)) {
 					if ((trapezoide.getX() == (trapezoide2.getX()-1)) 
@@ -142,8 +151,11 @@ public class MainMapaTrapezoidal {
 							trapTemp.setyFinal(trapezoide2.getyFinal());
 						}
 						trapTemp.calcularCentro();
-						pontosMedios[trapTemp.getX()][trapTemp.getyCentro()] = pontoMedio;
-						trapTemp = new Trapezoide();
+						
+						if (!pontoCego(trapTemp, pontosMedios)) {
+							pontosMedios[trapTemp.getX()][trapTemp.getyCentro()] = pontoMedio;
+							trapTemp = new Trapezoide();
+						}
 					}
 				}
 			}
