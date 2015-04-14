@@ -11,6 +11,7 @@ public class Trapezoide {
 		x = padrao;
 		yInicial = padrao;
 		yFinal = padrao;
+		yCentro = padrao;
 	}
 	
 	public boolean estaVazio() {

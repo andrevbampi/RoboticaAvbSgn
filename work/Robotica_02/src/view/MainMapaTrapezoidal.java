@@ -126,7 +126,9 @@ public class MainMapaTrapezoidal {
 			pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
 			for (Trapezoide trapezoide2 : listaTrapezoides) {
 				if (!trapezoide.equals(trapezoide2)) {
-					if (trapezoide.getX() == (trapezoide2.getX()-1)) {
+					if ((trapezoide.getX() == (trapezoide2.getX()-1)) 
+					&& (trapezoide.getyInicial() <= trapezoide2.getyFinal()) 
+					&& (trapezoide.getyFinal() >= trapezoide2.getyInicial())) {
 						trapTemp = new Trapezoide();
 						trapTemp.setX(trapezoide2.getX());
 						if (trapezoide.getyInicial() < trapezoide2.getyInicial()) {
@@ -141,6 +143,7 @@ public class MainMapaTrapezoidal {
 						}
 						trapTemp.calcularCentro();
 						pontosMedios[trapTemp.getX()][trapTemp.getyCentro()] = pontoMedio;
+						trapTemp = new Trapezoide();
 					}
 				}
 			}
@@ -168,10 +171,11 @@ public class MainMapaTrapezoidal {
 					str.append("[XX]");
 				else {
 					String s = String.valueOf(pontosMedios[j][i]);
-					if (s.length() < 2)
-						str.append("[" + String.format("%1s", "0") + s + "]");
-					else
-						str.append("[" + s + "]");
+					//if (s.length() < 2)
+					//	str.append("[" + String.format("%1s", "0") + s + "]");
+					//else
+					//	str.append("[" + s + "]");
+					str.append("[  ]");
 				}
 			}
 			str.append("\n");
@@ -189,8 +193,7 @@ public class MainMapaTrapezoidal {
 			System.out.println("\n");
 			mapaTrapezoidal.montarMatrizPontosMedios('A');
 			System.out.println("\n");
-			mapaTrapezoidal.imprimirPontosMedios('A');
-			System.out.println("\n");
+			System.out.println(mapaTrapezoidal.imprimirPontosMedios('A') + "\n");
 			
 			System.out.println("Cenário B");
 			mapaTrapezoidal.preencherCenarioInicial('B');
@@ -198,8 +201,8 @@ public class MainMapaTrapezoidal {
 			System.out.println("\n");
 			mapaTrapezoidal.montarMatrizPontosMedios('B');
 			System.out.println("\n");
-			mapaTrapezoidal.imprimirPontosMedios('B');
-			System.out.println("\n");
+			System.out.println(mapaTrapezoidal.imprimirPontosMedios('B') + "\n");
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
