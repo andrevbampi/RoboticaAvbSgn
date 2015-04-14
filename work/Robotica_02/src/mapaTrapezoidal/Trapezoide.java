@@ -20,6 +20,10 @@ public class Trapezoide {
 		return (x<padrao) && (yInicial<padrao) && (yFinal==padrao);
 	}
 	
+	public String toString() {
+		return "X = " + x + "; Y Inicial = " + yInicial + "; Y Final = " + yFinal;
+	}
+	
 	public int getX() {
 		return x;
 	}
