@@ -23,6 +23,7 @@ public class MainMapaTrapezoidal {
 			new PontoMapa(3, 6), new PontoMapa(5, 6) };
 	private ArrayList<Trapezoide> listaTrapezoidesA = new ArrayList<Trapezoide>();
 	private int[][] pontosMediosA = new int[6][7];
+	private ArrayList<PontoMapa> listaPontosA = new ArrayList<PontoMapa>();
 
 	private PontoMapa objetivoB = new PontoMapa(5, 6);
 	private PontoMapa inicioRoboB = new PontoMapa(0, 3);
@@ -31,6 +32,7 @@ public class MainMapaTrapezoidal {
 			new PontoMapa(2, 4), new PontoMapa(4, 5), new PontoMapa(3, 6) };
 	private ArrayList<Trapezoide> listaTrapezoidesB = new ArrayList<Trapezoide>();
 	private int[][] pontosMediosB = new int[6][7];
+	private ArrayList<PontoMapa> listaPontosB = new ArrayList<PontoMapa>();
 
 
 	public void preencherCenarioInicial(char cenario) throws Exception {
@@ -104,12 +106,14 @@ public class MainMapaTrapezoidal {
 	
 	public void montarMatrizPontosMedios(char cenario) throws Exception {
 		switch(cenario) {
-			case 'A': montarMatrizPontosMedios(listaTrapezoidesA, cenarioA, pontosMediosA);
+			case 'A': montarMatrizPontosMedios(listaTrapezoidesA, cenarioA, pontosMediosA, listaPontosA);
 					  break;
-			case 'B': montarMatrizPontosMedios(listaTrapezoidesB, cenarioB, pontosMediosB);
+			case 'B': montarMatrizPontosMedios(listaTrapezoidesB, cenarioB, pontosMediosB, listaPontosB);
 		}
 	}
 	
+	//Pontos cegos são os pontos em que não se pode ir nem pra cima, nem pra direita e nem pra baixo.
+	//Não devem ser inseridos, porque não levarão à lugar nenhum.
 	private boolean pontoCego(Trapezoide trapezoide, int[][] matriz) {
 		boolean bloqueadocima    = (trapezoide.getyCentro() == 0 || (matriz[trapezoide.getX()][trapezoide.getyCentro()-1] == obstaculo));
 		boolean bloqueadodireita = (trapezoide.getX() == matriz.length-1 || (matriz[trapezoide.getX()+1][trapezoide.getyCentro()] == obstaculo));
@@ -119,7 +123,8 @@ public class MainMapaTrapezoidal {
 	
 	private void montarMatrizPontosMedios(ArrayList<Trapezoide> listaTrapezoides,
 			                              int[][] cenario,
-			                              int[][] pontosMedios) throws Exception {
+			                              int[][] pontosMedios,
+			                              ArrayList<PontoMapa> listaPontos) throws Exception {
 		//Copiar a matriz de cenário
 		for (int x = 0; x < cenario.length; x++) {
 			for (int y = 0; y < cenario[x].length; y++) {
@@ -131,6 +136,7 @@ public class MainMapaTrapezoidal {
 			//O centro dos trapezóides também serão vértices. Não haverá distinção.
 			if (!pontoCego(trapezoide, pontosMedios)) {
 				pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
+				listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide.getyCentro()));
 			}
 		}
 		
@@ -157,6 +163,9 @@ public class MainMapaTrapezoidal {
 						
 						if (!pontoCego(trapTemp, pontosMedios)) {
 							pontosMedios[trapTemp.getX()][trapTemp.getyCentro()] = pontoMedio;
+							PontoMapa pontoMapa = new PontoMapa(trapTemp.getX(), trapTemp.getyCentro());
+							if (!listaPontos.contains(pontoMapa))
+								listaPontos.add(pontoMapa);
 							trapTemp = new Trapezoide();
 						}
 					}
