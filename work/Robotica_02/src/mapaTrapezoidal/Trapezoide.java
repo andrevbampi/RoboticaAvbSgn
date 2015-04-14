@@ -4,7 +4,7 @@ public class Trapezoide {
 	private int x;
 	private int yInicial;
 	private int yFinal;
-	private int yPontoMedio;
+	private int yCentro;
 	private final int padrao = 99;
 	
 	public Trapezoide() {
@@ -22,10 +22,10 @@ public class Trapezoide {
 	}
 	
 	public String toString() {
-		return "X = " + x + "; Y Inicial = " + yInicial + "; Y Final = " + yFinal + "; Y Ponto Médio = " + yPontoMedio;
+		return "X = " + x + "; Y Inicial = " + yInicial + "; Y Final = " + yFinal + "; Y Centro = " + yCentro;
 	}
 	
-	public void calcularPontoMedio() throws Exception {
+	public void calcularCentro() throws Exception {
 		if (x == padrao) {
 			throw new Exception("Trapezóide sem o valor do X informado.");
 		}
@@ -35,7 +35,7 @@ public class Trapezoide {
 		if (yFinal == padrao) {
 			throw new Exception("Trapezóide sem o valor do Y Final informado.");
 		}
-		yPontoMedio = (yInicial + yFinal) / 2;
+		yCentro = (yInicial + yFinal) / 2;
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class Trapezoide {
 	public void setyFinal(int yFinal) {
 		this.yFinal = yFinal;
 	}
-	public int getyPontoMedio() {
-		return yPontoMedio;
+	public int getyCentro() {
+		return yCentro;
 	}
 }

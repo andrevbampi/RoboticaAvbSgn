@@ -63,7 +63,7 @@ public class MainMapaTrapezoidal {
 				if (cenario[x][y] == obstaculo) {
 					if (!trapezoide.estaVazio()) {
 						trapezoide.setyFinal(y-1);
-						trapezoide.calcularPontoMedio();
+						trapezoide.calcularCentro();
 						listaTrapezoides.add(trapezoide);
 						trapezoide = new Trapezoide();
 					}
@@ -77,7 +77,7 @@ public class MainMapaTrapezoidal {
 			if (trapezoide.faltaFim()) {
 				trapezoide.setyFinal(cenario[x].length-1);
 				listaTrapezoides.add(trapezoide);
-				trapezoide.calcularPontoMedio();
+				trapezoide.calcularCentro();
 				trapezoide = new Trapezoide();
 			}
 		}
