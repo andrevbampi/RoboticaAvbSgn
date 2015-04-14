@@ -127,12 +127,15 @@ public class MainMapaTrapezoidal {
 			}
 		}
 		
-		Trapezoide trapTemp = null;
 		for (Trapezoide trapezoide : listaTrapezoides) {
 			//O centro dos trapezóides também serão vértices. Não haverá distinção.
 			if (!pontoCego(trapezoide, pontosMedios)) {
 				pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
 			}
+		}
+		
+		Trapezoide trapTemp = null;
+		for (Trapezoide trapezoide : listaTrapezoides) {
 			for (Trapezoide trapezoide2 : listaTrapezoides) {
 				if (!trapezoide.equals(trapezoide2)) {
 					if ((trapezoide.getX() == (trapezoide2.getX()-1)) 
