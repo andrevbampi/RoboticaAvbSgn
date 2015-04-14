@@ -38,6 +38,17 @@ public class Trapezoide {
 		yPontoMedio = (yInicial + yFinal) / 2;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Trapezoide) {
+			Trapezoide trapezoide =  (Trapezoide) obj;
+			return (trapezoide.getX() == x) &&
+					trapezoide.getyInicial() == yInicial &&
+					trapezoide.getyFinal() == yFinal;
+		}
+		return false;
+	}
+	
 	public int getX() {
 		return x;
 	}
