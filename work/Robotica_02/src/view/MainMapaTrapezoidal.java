@@ -132,13 +132,13 @@ public class MainMapaTrapezoidal {
 			}
 		}
 		
-		for (Trapezoide trapezoide : listaTrapezoides) {
+		/*for (Trapezoide trapezoide : listaTrapezoides) {
 			//O centro dos trapezóides também serão vértices. Não haverá distinção.
 			if (!pontoCego(trapezoide, pontosMedios)) {
 				pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
 				listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide.getyCentro()));
 			}
-		}
+		}*/
 		
 		Trapezoide trapTemp = null;
 		for (Trapezoide trapezoide : listaTrapezoides) {
@@ -205,6 +205,34 @@ public class MainMapaTrapezoidal {
 			str.append("\n");
 		}
 		return str.toString();
+	}
+	
+	private boolean temPontoMedioOuObstaculo(PontoMapa pontoIni, PontoMapa pontoFim, int[][] pontosMedios) {
+		for (int j = 0; j < pontosMedios[pontoIni.getX()].length; j++) {
+			return ( ()
+			&& ((pontosMedios[pontoIni.getX()][j] == obstaculo)
+			    || (pontosMedios[pontoIni.getX()][j] == pontoMedio)));
+		} 
+		return false;
+	}
+	
+	private int[][] gerarMatrizAdjacencia(ArrayList<PontoMapa> listaPontos, int[][] pontosMedios) {
+		int[][] matrizAdj = new int[listaPontos.size()][listaPontos.size()];
+		for (int i = 0; i < listaPontos.size(); i++) {
+			for (int j = 0; j < listaPontos.size(); j++) {
+				if ((i == j)
+				|| (listaPontos.get(i).getX() > listaPontos.get(j).getX())
+				|| (listaPontos.get(j).getX() > listaPontos.get(i).getX()+1)
+				|| (temPontoMedioOuObstaculo(listaPontos.get(i), listaPontos.get(j), pontosMedios))
+				) {
+					matrizAdj[i][j] = 0;
+				} else {
+					matrizAdj[i][j] = 1;
+				}
+				
+			}
+		}
+		return null;
 	}
 	
 	public static void main(String[] args) {
