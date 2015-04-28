@@ -12,7 +12,7 @@ public class Main {
 
 	public static void executaComandos(List<Direcao> navegacao) {
 		Direcao dAtual = Direcao.L;
-		int anguloPositivo = 280;
+		int anguloPositivo = 270;
 		int anguloNegativo = anguloPositivo * -1;
 		
 		for (Direcao d : navegacao) {
@@ -72,17 +72,15 @@ public class Main {
 	}
 	
 	public static void frente() {
-		Motor.A.forward();
-		Motor.B.forward();
+		int andar = 600;
+		Motor.A.rotate(andar, true);
+		Motor.B.rotate(andar);
 		
 		try {
-			Thread.sleep(1500);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		Motor.A.stop(true);
-		Motor.B.stop(true);
 	}
 	
 	public static void main(String[] args) {
