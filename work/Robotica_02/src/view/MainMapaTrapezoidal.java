@@ -104,16 +104,13 @@ public class MainMapaTrapezoidal {
 	}
 
 	public void montarMatrizPontosMedios(char cenario) throws Exception {
-		switch (cenario) {
-		case 'A':
-			montarMatrizPontosMedios(listaTrapezoidesA, cenarioA,
-					pontosMediosA, listaPontosA);
-			break;
-		case 'B':
-			montarMatrizPontosMedios(listaTrapezoidesB, cenarioB,
-					pontosMediosB, listaPontosB);
+		switch(cenario) {
+			case 'A': montarMatrizPontosMedios(listaTrapezoidesA, cenarioA, pontosMediosA, inicioRoboA, objetivoA, listaPontosA);
+					  break;
+			case 'B': montarMatrizPontosMedios(listaTrapezoidesB, cenarioB, pontosMediosB, inicioRoboB, objetivoB, listaPontosB);
 		}
 	}
+
 
 	// Pontos cegos são os pontos em que não se pode ir nem pra cima, nem pra
 	// direita e nem pra baixo.
@@ -129,10 +126,13 @@ public class MainMapaTrapezoidal {
 		return (bloqueadocima && bloqueadodireita && bloqueadobaixo);
 	}
 
-	private void montarMatrizPontosMedios(
-			ArrayList<Trapezoide> listaTrapezoides, int[][] cenario,
-			int[][] pontosMedios, ArrayList<PontoMapa> listaPontos)
-			throws Exception {
+	private void montarMatrizPontosMedios(ArrayList<Trapezoide> listaTrapezoides,
+            int[][] cenario,
+            int[][] pontosMedios,
+            PontoMapa inicioRobo, 
+            PontoMapa objetivo,
+            ArrayList<PontoMapa> listaPontos) throws Exception {
+
 		// Copiar a matriz de cenário
 		for (int x = 0; x < cenario.length; x++) {
 			for (int y = 0; y < cenario[x].length; y++) {
