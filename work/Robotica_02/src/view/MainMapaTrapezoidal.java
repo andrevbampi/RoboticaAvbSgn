@@ -8,7 +8,7 @@ import util.PontoMapa;
 public class MainMapaTrapezoidal {
 	private final int padrao = 99;
 	private final int obstaculo = -1;
-	//Números aleatórios da minha cabeça
+	// Números aleatórios da minha cabeça
 	private final int centro = 44;
 	private final int pontoMedio = 12;
 
@@ -34,23 +34,20 @@ public class MainMapaTrapezoidal {
 	private int[][] pontosMediosB = new int[6][7];
 	private ArrayList<PontoMapa> listaPontosB = new ArrayList<PontoMapa>();
 
-
 	public void preencherCenarioInicial(char cenario) throws Exception {
-		switch(cenario) {
-			case 'A': preencherCenarioInicial(listaTrapezoidesA,
-                    						  cenarioA, 
-                    						  obstaculosA);
+		switch (cenario) {
+		case 'A':
+			preencherCenarioInicial(listaTrapezoidesA, cenarioA, obstaculosA);
 			break;
-			case 'B': preencherCenarioInicial(listaTrapezoidesB,
-					  cenarioB, 
-					  obstaculosB);
+		case 'B':
+			preencherCenarioInicial(listaTrapezoidesB, cenarioB, obstaculosB);
 		}
 	}
-	
-	private void preencherCenarioInicial(ArrayList<Trapezoide> listaTrapezoides,
-			                             int[][] cenario, 
-			                             PontoMapa[] obstaculos) throws Exception {
-		//Atribuir valor padrão
+
+	private void preencherCenarioInicial(
+			ArrayList<Trapezoide> listaTrapezoides, int[][] cenario,
+			PontoMapa[] obstaculos) throws Exception {
+		// Atribuir valor padrão
 		for (int i = 0; i < cenario.length; i++) {
 			for (int j = 0; j < cenario[i].length; j++) {
 				cenario[i][j] = padrao;
@@ -61,15 +58,15 @@ public class MainMapaTrapezoidal {
 		for (PontoMapa pontoMapa : obstaculos) {
 			cenario[pontoMapa.getX()][pontoMapa.getY()] = obstaculo;
 		}
-		
-		//Gerar os trapezóides
-		//listaTrapezoides = new ArrayList<Trapezoide>();
+
+		// Gerar os trapezóides
+		// listaTrapezoides = new ArrayList<Trapezoide>();
 		Trapezoide trapezoide = new Trapezoide();
 		for (int x = 0; x < cenario.length; x++) {
 			for (int y = 0; y < cenario[x].length; y++) {
 				if (cenario[x][y] == obstaculo) {
 					if (!trapezoide.estaVazio()) {
-						trapezoide.setyFinal(y-1);
+						trapezoide.setyFinal(y - 1);
 						trapezoide.calcularCentro();
 						listaTrapezoides.add(trapezoide);
 						trapezoide = new Trapezoide();
@@ -82,74 +79,89 @@ public class MainMapaTrapezoidal {
 				}
 			}
 			if (trapezoide.faltaFim()) {
-				trapezoide.setyFinal(cenario[x].length-1);
+				trapezoide.setyFinal(cenario[x].length - 1);
 				listaTrapezoides.add(trapezoide);
 				trapezoide.calcularCentro();
 				trapezoide = new Trapezoide();
 			}
 		}
 	}
-	
+
 	public void mostrarTrapezoides(char cenario) {
-		switch(cenario) {
-			case 'A': mostrarTrapezoides(listaTrapezoidesA);
+		switch (cenario) {
+		case 'A':
+			mostrarTrapezoides(listaTrapezoidesA);
 			break;
-			case 'B': mostrarTrapezoides(listaTrapezoidesB);
+		case 'B':
+			mostrarTrapezoides(listaTrapezoidesB);
 		}
 	}
-	
+
 	public void mostrarTrapezoides(ArrayList<Trapezoide> listaTrapezoides) {
 		for (Trapezoide trapezoide : listaTrapezoides) {
 			System.out.println(trapezoide);
 		}
 	}
-	
+
 	public void montarMatrizPontosMedios(char cenario) throws Exception {
-		switch(cenario) {
-			case 'A': montarMatrizPontosMedios(listaTrapezoidesA, cenarioA, pontosMediosA, listaPontosA);
-					  break;
-			case 'B': montarMatrizPontosMedios(listaTrapezoidesB, cenarioB, pontosMediosB, listaPontosB);
+		switch (cenario) {
+		case 'A':
+			montarMatrizPontosMedios(listaTrapezoidesA, cenarioA,
+					pontosMediosA, listaPontosA);
+			break;
+		case 'B':
+			montarMatrizPontosMedios(listaTrapezoidesB, cenarioB,
+					pontosMediosB, listaPontosB);
 		}
 	}
-	
-	//Pontos cegos são os pontos em que não se pode ir nem pra cima, nem pra direita e nem pra baixo.
-	//Não devem ser inseridos, porque não levarão à lugar nenhum.
+
+	// Pontos cegos são os pontos em que não se pode ir nem pra cima, nem pra
+	// direita e nem pra baixo.
+	// Não devem ser inseridos, porque não levarão à lugar nenhum.
 	private boolean pontoCego(Trapezoide trapezoide, int[][] matriz) {
-		boolean bloqueadocima    = (trapezoide.getyCentro() == 0 || (matriz[trapezoide.getX()][trapezoide.getyCentro()-1] == obstaculo));
-		boolean bloqueadodireita = (trapezoide.getX() == matriz.length-1 || (matriz[trapezoide.getX()+1][trapezoide.getyCentro()] == obstaculo));
-		boolean bloqueadobaixo   = (trapezoide.getyCentro() == matriz[trapezoide.getX()].length-1 || (matriz[trapezoide.getX()][trapezoide.getyCentro()+1] == obstaculo));
+		boolean bloqueadocima = (trapezoide.getyCentro() == 0 || (matriz[trapezoide
+				.getX()][trapezoide.getyCentro() - 1] == obstaculo));
+		boolean bloqueadodireita = (trapezoide.getX() == matriz.length - 1 || (matriz[trapezoide
+				.getX() + 1][trapezoide.getyCentro()] == obstaculo));
+		boolean bloqueadobaixo = (trapezoide.getyCentro() == matriz[trapezoide
+				.getX()].length - 1 || (matriz[trapezoide.getX()][trapezoide
+				.getyCentro() + 1] == obstaculo));
 		return (bloqueadocima && bloqueadodireita && bloqueadobaixo);
 	}
-	
-	private void montarMatrizPontosMedios(ArrayList<Trapezoide> listaTrapezoides,
-			                              int[][] cenario,
-			                              int[][] pontosMedios,
-			                              ArrayList<PontoMapa> listaPontos) throws Exception {
-		//Copiar a matriz de cenário
+
+	private void montarMatrizPontosMedios(
+			ArrayList<Trapezoide> listaTrapezoides, int[][] cenario,
+			int[][] pontosMedios, ArrayList<PontoMapa> listaPontos)
+			throws Exception {
+		// Copiar a matriz de cenário
 		for (int x = 0; x < cenario.length; x++) {
 			for (int y = 0; y < cenario[x].length; y++) {
-				pontosMedios[x][y] = cenario [x][y];
+				pontosMedios[x][y] = cenario[x][y];
 			}
 		}
-		
-		/*for (Trapezoide trapezoide : listaTrapezoides) {
-			//O centro dos trapezóides também serão vértices. Não haverá distinção.
-			if (!pontoCego(trapezoide, pontosMedios)) {
-				pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
-				listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide.getyCentro()));
-			}
-		}*/
-		
+
+		/*
+		 * for (Trapezoide trapezoide : listaTrapezoides) { // O centro dos
+		 * trapezóides também serão vértices. Não haverá // distinção.
+		 * if (!pontoCego(trapezoide, pontosMedios)) {
+		 * pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
+		 * listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide
+		 * .getyCentro())); } }
+		 */
+
 		Trapezoide trapTemp = null;
 		for (Trapezoide trapezoide : listaTrapezoides) {
 			for (Trapezoide trapezoide2 : listaTrapezoides) {
 				if (!trapezoide.equals(trapezoide2)) {
-					if ((trapezoide.getX() == (trapezoide2.getX()-1)) 
-					&& (trapezoide.getyInicial() <= trapezoide2.getyFinal()) 
-					&& (trapezoide.getyFinal() >= trapezoide2.getyInicial())) {
+					if ((trapezoide.getX() == (trapezoide2.getX() - 1))
+							&& (trapezoide.getyInicial() <= trapezoide2
+									.getyFinal())
+							&& (trapezoide.getyFinal() >= trapezoide2
+									.getyInicial())) {
 						trapTemp = new Trapezoide();
 						trapTemp.setX(trapezoide2.getX());
-						if (trapezoide.getyInicial() < trapezoide2.getyInicial()) {
+						if (trapezoide.getyInicial() < trapezoide2
+								.getyInicial()) {
 							trapTemp.setyInicial(trapezoide2.getyInicial());
 						} else {
 							trapTemp.setyInicial(trapezoide.getyInicial());
@@ -160,10 +172,11 @@ public class MainMapaTrapezoidal {
 							trapTemp.setyFinal(trapezoide2.getyFinal());
 						}
 						trapTemp.calcularCentro();
-						
+
 						if (!pontoCego(trapTemp, pontosMedios)) {
 							pontosMedios[trapTemp.getX()][trapTemp.getyCentro()] = pontoMedio;
-							PontoMapa pontoMapa = new PontoMapa(trapTemp.getX(), trapTemp.getyCentro());
+							PontoMapa pontoMapa = new PontoMapa(
+									trapTemp.getX(), trapTemp.getyCentro());
 							if (!listaPontos.contains(pontoMapa))
 								listaPontos.add(pontoMapa);
 							trapTemp = new Trapezoide();
@@ -173,17 +186,19 @@ public class MainMapaTrapezoidal {
 			}
 		}
 	}
-	
+
 	public String imprimirPontosMedios(char cenario) {
-		switch(cenario) {
-			case 'A': return imprimirPontosMedios(pontosMediosA);
-			case 'B': return imprimirPontosMedios(pontosMediosB);
+		switch (cenario) {
+		case 'A':
+			return imprimirPontosMedios(pontosMediosA);
+		case 'B':
+			return imprimirPontosMedios(pontosMediosB);
 		}
 		return "";
 	}
-	
+
 	private String imprimirPontosMedios(int[][] pontosMedios) {
- 		StringBuilder str = new StringBuilder();
+		StringBuilder str = new StringBuilder();
 
 		for (int i = 0; i < pontosMedios[0].length; i++) {
 			for (int j = 0; j < pontosMedios.length; j++) {
@@ -195,10 +210,10 @@ public class MainMapaTrapezoidal {
 					str.append("[XX]");
 				else {
 					String s = String.valueOf(pontosMedios[j][i]);
-					//if (s.length() < 2)
-					//	str.append("[" + String.format("%1s", "0") + s + "]");
-					//else
-					//	str.append("[" + s + "]");
+					// if (s.length() < 2)
+					// str.append("[" + String.format("%1s", "0") + s + "]");
+					// else
+					// str.append("[" + s + "]");
 					str.append("[  ]");
 				}
 			}
@@ -206,55 +221,73 @@ public class MainMapaTrapezoidal {
 		}
 		return str.toString();
 	}
-	
-	private boolean temPontoMedioOuObstaculo(PontoMapa pontoIni, PontoMapa pontoFim, int[][] pontosMedios) {
-		for (int j = 0; j < pontosMedios[pontoIni.getX()].length; j++) {
-			return ( ()
-			&& ((pontosMedios[pontoIni.getX()][j] == obstaculo)
-			    || (pontosMedios[pontoIni.getX()][j] == pontoMedio)));
-		} 
+
+	private boolean temAdjacencia(PontoMapa pontoIni, PontoMapa pontoFim, int[][] pontosMedios) {
+		int xIni = pontoIni.getX();
+		int xFim = pontoFim.getX();
+		
+		if (((xIni + 1) < xFim) || (xIni > xFim))
+			return false;
+		
+		boolean achouI = false, achouF = false;
+		for (int j = 0; j < pontosMedios[xFim].length; j++) {
+			int v = pontosMedios[xFim][j];
+			if (v != padrao) {
+				if (j == pontoIni.getY())
+					achouI = true;
+				
+				if (j == pontoFim.getY())
+					achouF = true;
+				
+				if (v == obstaculo && (achouF || achouI))
+					return false;
+				
+				if (achouI && achouF)
+					return true;
+			}
+		}
+		
 		return false;
 	}
-	
+
 	private int[][] gerarMatrizAdjacencia(ArrayList<PontoMapa> listaPontos, int[][] pontosMedios) {
 		int[][] matrizAdj = new int[listaPontos.size()][listaPontos.size()];
+		
 		for (int i = 0; i < listaPontos.size(); i++) {
 			for (int j = 0; j < listaPontos.size(); j++) {
-				if ((i == j)
-				|| (listaPontos.get(i).getX() > listaPontos.get(j).getX())
-				|| (listaPontos.get(j).getX() > listaPontos.get(i).getX()+1)
-				|| (temPontoMedioOuObstaculo(listaPontos.get(i), listaPontos.get(j), pontosMedios))
-				) {
+				if ((i == j) || !temAdjacencia(listaPontos.get(i), listaPontos.get(j), pontosMedios)) {
 					matrizAdj[i][j] = 0;
 				} else {
 					matrizAdj[i][j] = 1;
 				}
-				
 			}
 		}
+		
 		return null;
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			MainMapaTrapezoidal mapaTrapezoidal = new MainMapaTrapezoidal();
-			
+
 			System.out.println("Cenário A");
 			mapaTrapezoidal.preencherCenarioInicial('A');
 			mapaTrapezoidal.mostrarTrapezoides('A');
 			System.out.println("\n");
 			mapaTrapezoidal.montarMatrizPontosMedios('A');
 			System.out.println("\n");
-			System.out.println(mapaTrapezoidal.imprimirPontosMedios('A') + "\n");
-			
+			System.out
+					.println(mapaTrapezoidal.imprimirPontosMedios('A') + "\n");
+
 			System.out.println("Cenário B");
 			mapaTrapezoidal.preencherCenarioInicial('B');
 			mapaTrapezoidal.mostrarTrapezoides('B');
 			System.out.println("\n");
 			mapaTrapezoidal.montarMatrizPontosMedios('B');
 			System.out.println("\n");
-			System.out.println(mapaTrapezoidal.imprimirPontosMedios('B') + "\n");
-			
+			System.out
+					.println(mapaTrapezoidal.imprimirPontosMedios('B') + "\n");
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
