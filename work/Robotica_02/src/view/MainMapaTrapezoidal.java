@@ -222,7 +222,7 @@ public class MainMapaTrapezoidal {
 		return str.toString();
 	}
 
-	private boolean temAdjacencia(PontoMapa pontoIni, PontoMapa pontoFim, int[][] pontosMedios) {
+	/*private boolean temAdjacencia(PontoMapa pontoIni, PontoMapa pontoFim, int[][] pontosMedios) {
 		int xIni = pontoIni.getX();
 		int xFim = pontoFim.getX();
 		
@@ -264,6 +264,10 @@ public class MainMapaTrapezoidal {
 		}
 		
 		return null;
+	}*/
+	
+	public void montarCaminho(int[][]listaPontos, PontoMapa inicioRobo, PontoMapa objetivo) {
+		
 	}
 
 	public static void main(String[] args) {
