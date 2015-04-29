@@ -140,16 +140,16 @@ public class MainMapaTrapezoidal {
 			}
 		}
 
-		/*
-		 * for (Trapezoide trapezoide : listaTrapezoides) { // O centro dos
-		 * trapezóides também serão vértices. Não haverá // distinção.
-		 * if (!pontoCego(trapezoide, pontosMedios)) {
-		 * pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = centro;
-		 * listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide
-		 * .getyCentro())); } }
-		 */
+		
+		  for (Trapezoide trapezoide : listaTrapezoides) { // O centro dos trapezóides também serão vértices. Não haverá // distinção.
+			  if (!pontoCego(trapezoide, pontosMedios)) {
+				  pontosMedios[trapezoide.getX()][trapezoide.getyCentro()] = pontoMedio;
+				  listaPontos.add(new PontoMapa(trapezoide.getX(), trapezoide.getyCentro())); 
+			  } 
+		  }
+		 
 
-		Trapezoide trapTemp = null;
+		/*Trapezoide trapTemp = null;
 		for (Trapezoide trapezoide : listaTrapezoides) {
 			for (Trapezoide trapezoide2 : listaTrapezoides) {
 				if (!trapezoide.equals(trapezoide2)) {
@@ -184,7 +184,7 @@ public class MainMapaTrapezoidal {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	public String imprimirPontosMedios(char cenario) {
